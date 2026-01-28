@@ -10,4 +10,8 @@ public partial class MitarbeiterDto
     public string Name { get; set; } = null!;
 
     public int Available { get; set; }
+    
+    public virtual IList<Skill> Skills { get; set; } = new List<Skill>();
+
+    public virtual IList<Mitarbeiterskillnm> Mitarbeiterskillnms { get; set; } = new List<Mitarbeiterskillnm>();
 }

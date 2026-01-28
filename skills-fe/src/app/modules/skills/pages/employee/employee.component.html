@@ -11,3 +11,34 @@
     <li>{{skillGruppe.name}}</li>
   }
 </ul>
+
+<table>
+  <tr>
+    <td>Skill</td>
+    @for (angestellter of mitarbeiter(); track angestellter.mitarbeiterId) {
+      <td>{{angestellter.name}}</td>
+    }
+  </tr>
+  @for (skillGruppe of skillGruppen(); track skillGruppe.skillGruppeId) {
+    <tr>
+      <td><h3>{{skillGruppe.name}}</h3></td>
+      @for (angestellter of mitarbeiter(); track angestellter.mitarbeiterId) {
+        <td>&nbsp;</td>
+      }
+    </tr>
+    @for (skill of skillGruppe.skills; track skill.skillId) {
+      <tr>
+        <td>{{skill.name}}</td>
+        @for (angestellter of mitarbeiter(); track angestellter.mitarbeiterId) {
+          <td>
+            @for (mitarbeiterskillnm of skill.mitarbeiterskillnms; track mitarbeiterskillnm.mitarbetierSkillId) {
+              @if (mitarbeiterskillnm.mitarbeiterId == angestellter.mitarbeiterId) {
+                {{mitarbeiterskillnm.level}}
+              }
+            }
+          </td>
+        }
+      </tr>
+    }
+  }
+</table>
