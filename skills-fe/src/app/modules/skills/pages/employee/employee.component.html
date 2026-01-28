@@ -32,8 +32,8 @@
 </form>
 
 <table class="w-full">
-  <thead class="bg-gray-50 border-b-2 border-gray-400">
-    <tr class="bg-gray-400">
+  <thead class="bg-gray-50 border-b-2 border-gray-200">
+    <tr class="bg-gray-200">
       <th class="p-3 text-sm tracking-wide text-left">Skill</th>
       @for (angestellter of filterMitarbeiter(mitarbeiter()); track angestellter.mitarbeiterId) {
         <th class="p-3 text-sm tracking-wide text-left">{{angestellter.name}}</th>
@@ -44,11 +44,11 @@
     @for (skillGruppe of skillGruppen(); track skillGruppe.skillGruppeId) {
       @if (skillGruppe.skills?.length !== 0) {
         <tr class="border-b-2 border-gray-200">
-          <td class="bg-gray-300 p-3 text-sm text-gray-700">
+          <td class="bg-gray-100 p-3 text-sm text-gray-700">
             <h3>{{skillGruppe.name}}</h3>
           </td>
           @for (angestellter of filterMitarbeiter(mitarbeiter()); track angestellter.mitarbeiterId) {
-            <td class="bg-gray-300 p-3 text-sm text-gray-700">&nbsp;</td>
+            <td class="bg-gray-100 p-3 text-sm text-gray-700">&nbsp;</td>
           }
         </tr>
       }
