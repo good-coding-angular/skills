@@ -41,6 +41,7 @@ public class SkillgruppenController
         {
             var skillgruppen = db.Skillgruppen
                 .Include(sg => sg.Skills)
+                .ThenInclude(s => s.Mitarbeiterskillnms)
                 .ThenInclude(s => s.Mitarbeiter)
                 .ToList();
             

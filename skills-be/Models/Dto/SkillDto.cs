@@ -14,4 +14,6 @@ public partial class SkillDto
     public virtual IList<SkillgruppeDto>? Skillgruppen { get; set; }
     
     public virtual IList<MitarbeiterDto> Mitarbeiter { get; set; } = new List<MitarbeiterDto>();
+    
+    public virtual IList<MitarbeiterskillnmDto> Mitarbeiterskillnms { get; set; } = new List<MitarbeiterskillnmDto>();
 }

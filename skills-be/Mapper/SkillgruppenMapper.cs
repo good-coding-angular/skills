@@ -37,7 +37,8 @@ public class SkillgruppenMapper
                 SkillId = skillgruppe.SkillId,
                 Name = skillgruppe.Name,
                 Description = skillgruppe.Description,
-                Mitarbeiter = MapMitarbeiterToMitarbeiterDtos(skillgruppe.Mitarbeiter)
+                Mitarbeiter = MapMitarbeiterToMitarbeiterDtos(skillgruppe.Mitarbeiter),
+                Mitarbeiterskillnms = MapMitarbeiterskillnmsToMitarbeiterskillnmsDtos(skillgruppe.Mitarbeiterskillnms),
             };
 
             skillDtos.Add(skillDto);
@@ -63,5 +64,26 @@ public class SkillgruppenMapper
         }
 
         return mitarbeiterDtos;
+    }
+    
+    public IList<MitarbeiterskillnmDto> MapMitarbeiterskillnmsToMitarbeiterskillnmsDtos(
+        IEnumerable<Mitarbeiterskillnm> mitarbeiterskillnms
+    ) {
+        var mitarbeiterskillnmDtos = new List<MitarbeiterskillnmDto>();
+
+        foreach (var mitarbeiterskillnm in mitarbeiterskillnms)
+        {
+            var mitarbeiterskillnmDto = new MitarbeiterskillnmDto
+            {
+                MitarbetierSkillId = mitarbeiterskillnm.MitarbetierSkillId,
+                MitarbeiterId = mitarbeiterskillnm.MitarbeiterId,
+                SkillId = mitarbeiterskillnm.SkillId,
+                Level = mitarbeiterskillnm.Level
+            };
+
+            mitarbeiterskillnmDtos.Add(mitarbeiterskillnmDto);
+        }
+
+        return mitarbeiterskillnmDtos;
     }
 }
