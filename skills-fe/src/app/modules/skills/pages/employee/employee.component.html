@@ -1,0 +1,13 @@
+<h1>Employee Page</h1>
+
+<ul>
+  @for (skill of skills(); track skill.skillId) {
+    <li>{{skill.name}}</li>
+  }
+</ul>
+<hr>
+<ul>
+  @for (skillGruppe of skillGruppen(); track skillGruppe.skillGruppeId) {
+    <li>{{skillGruppe.name}}</li>
+  }
+</ul>
