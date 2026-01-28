@@ -2,7 +2,7 @@ import {Component, inject} from '@angular/core';
 import {ApiModule, MitarbeiterService, SkillgruppenService} from '../../../backend';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {NgClass} from '@angular/common';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
@@ -27,7 +27,9 @@ export class EmployeeComponent {
   public skillGruppen = toSignal(this.skillgruppenService.apiSkillgruppenGetSkillgruppenWithUsersGet());
   public mitarbeiter = toSignal(this.mitarbeiterService.apiMitarbeiterGetAllMitarbeiterGet());
 
-  formMitarbeiter = new FormControl('');
+  mitarbeiterForm = new FormGroup({
+    mitarbeiter: new FormControl('')
+  });
 
   public getSkillLevel(level: number | undefined): string {
     if (level === undefined) {
