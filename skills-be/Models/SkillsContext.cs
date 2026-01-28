@@ -35,7 +35,7 @@ public partial class SkillsContext : DbContext
 
     public virtual DbSet<Skill> Skills { get; set; }
 
-    public virtual DbSet<Skillgruppe> Skillgruppes { get; set; }
+    public virtual DbSet<Skillgruppe> Skillgruppen { get; set; }
 
     public virtual DbSet<Skilllearningsource> Skilllearningsources { get; set; }
 
@@ -110,6 +110,16 @@ public partial class SkillsContext : DbContext
             entity.Property(e => e.SkillId)
                 .HasMaxLength(36)
                 .HasColumnName("skillId");
+
+            entity.HasOne(d => d.Mitarbeiter)
+                .WithMany(p => p.Mitarbeiterskillnms)
+                .HasForeignKey(d => d.MitarbeiterId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            entity.HasOne(d => d.Skill)
+                .WithMany(p => p.Mitarbeiterskillnms)
+                .HasForeignKey(d => d.SkillId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<Projekt>(entity =>
@@ -202,6 +212,37 @@ public partial class SkillsContext : DbContext
                     j.Property(e => e.SkillgruppeId)
                         .HasMaxLength(36)
                         .HasColumnName("skillgruppeId");
+                });
+
+        modelBuilder.Entity<Mitarbeiter>()
+            .HasMany(m => m.Skills)
+            .WithMany(s => s.Mitarbeiter)
+            .UsingEntity<Mitarbeiterskillnm>(
+                j => j
+                    .HasOne(ms => ms.Skill)
+                    .WithMany(s => s.Mitarbeiterskillnms)
+                    .HasForeignKey(ms => ms.SkillId),
+                j => j
+                    .HasOne(ms => ms.Mitarbeiter)
+                    .WithMany(m => m.Mitarbeiterskillnms)
+                    .HasForeignKey(ms => ms.MitarbeiterId),
+                j =>
+                {
+                    j.HasKey(e => e.MitarbetierSkillId).HasName("PRIMARY");
+                    j.ToTable("mitarbeiterskillnm");
+
+                    j.Property(e => e.MitarbetierSkillId)
+                        .HasMaxLength(36)
+                        .HasColumnName("mitarbetierSkillId");
+                    j.Property(e => e.Level)
+                        .HasColumnType("int(11)")
+                        .HasColumnName("level");
+                    j.Property(e => e.MitarbeiterId)
+                        .HasMaxLength(36)
+                        .HasColumnName("mitarbeiterId");
+                    j.Property(e => e.SkillId)
+                        .HasMaxLength(36)
+                        .HasColumnName("skillId");
                 });
 
         OnModelCreatingPartial(modelBuilder);

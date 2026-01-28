@@ -18,5 +18,5 @@ export class EmployeeComponent {
   public skillsService = inject(SkillsService);
   public skillgruppenService = inject(SkillgruppenService);
   public skills = toSignal(this.skillsService.apiSkillsGetSkillsGet());
-  public skillGruppen = toSignal(this.skillgruppenService.apiSkillgruppenGetSkillgruppenGet());
+  public skillGruppen = toSignal(this.skillgruppenService.apiSkillgruppenGetSkillgruppenWithUsersGet());
 }

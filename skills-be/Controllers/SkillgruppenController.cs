@@ -22,8 +22,26 @@ public class SkillgruppenController
     {
         using (var db = new SkillsContext(Configuration))
         {
-            var skillgruppen = db.Skillgruppes
+            var skillgruppen = db.Skillgruppen
                 .Include(g => g.Skills)
+                .ToList();
+            
+            var result = new SkillgruppenMapper()
+                .MapSkillgruppeToSkillgruppeDto(skillgruppen)
+                .ToArray();
+
+            return result;
+        }
+    }
+
+    [HttpGet("getSkillgruppenWithUsers")]
+    public IEnumerable<SkillgruppeDto> GetSkillgruppenWithUsers()
+    {
+        using (var db = new SkillsContext(Configuration))
+        {
+            var skillgruppen = db.Skillgruppen
+                .Include(sg => sg.Skills)
+                .ThenInclude(s => s.Mitarbeiter)
                 .ToList();
             
             var result = new SkillgruppenMapper()
