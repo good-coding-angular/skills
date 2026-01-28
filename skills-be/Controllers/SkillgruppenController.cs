@@ -52,5 +52,44 @@ public class SkillgruppenController
             return result;
         }
     }
+
+    [HttpPost("getFilteredSkillgruppen")]
+    public IEnumerable<SkillgruppeDto> GetFilteredSkillgruppen([FromBody] GetFilteredSkillgruppenPostDto filter)
+    {
+        using (var db = new SkillsContext(Configuration))
+        {
+            var skillgruppen = db.Skillgruppen
+                .Include(sg => sg.Skills)
+                .ThenInclude(s => s.Mitarbeiterskillnms)
+                .ThenInclude(ms => ms.Mitarbeiter)
+                .ToList();
+
+            var userIds = filter.Users?.ToHashSet() ?? new HashSet<string>();
+            var skillIds = filter.Skills?.ToHashSet() ?? new HashSet<string>();
+
+            foreach (var sg in skillgruppen)
+            {
+                if (skillIds.Count != 0)
+                {
+                    sg.Skills = sg.Skills
+                        .Where(s => skillIds.Contains(s.SkillId))
+                        .ToList();
+                }
+
+                foreach (var skill in sg.Skills)
+                {
+                    skill.Mitarbeiterskillnms = skill.Mitarbeiterskillnms
+                        .Where(ms => userIds.Contains(ms.Mitarbeiter.MitarbeiterId))
+                        .ToList();
+                }
+            }
+            
+            var result = new SkillgruppenMapper()
+                .MapSkillgruppeToSkillgruppeDto(skillgruppen)
+                .ToArray();
+
+            return result;
+        }
+    }
 }
 
