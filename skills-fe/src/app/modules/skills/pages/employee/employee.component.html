@@ -1,44 +1,47 @@
-<h1>Employee Page</h1>
+<h1 class="mb-4 text-4xl font-bold tracking-tight text-heading md:text-5xl lg:text-6xl">Employee Page</h1>
 
-<ul>
-  @for (skill of skills(); track skill.skillId) {
-    <li>{{skill.name}}</li>
-  }
-</ul>
-<hr>
-<ul>
-  @for (skillGruppe of skillGruppen(); track skillGruppe.skillGruppeId) {
-    <li>{{skillGruppe.name}}</li>
-  }
-</ul>
-
-<table>
-  <tr>
-    <td>Skill</td>
-    @for (angestellter of mitarbeiter(); track angestellter.mitarbeiterId) {
-      <td>{{angestellter.name}}</td>
-    }
-  </tr>
-  @for (skillGruppe of skillGruppen(); track skillGruppe.skillGruppeId) {
-    <tr>
-      <td><h3>{{skillGruppe.name}}</h3></td>
+<form>
+  <mat-form-field>
+    <mat-label>Mitarbeiter</mat-label>
+    <mat-select [formControl]="formMitarbeiter" multiple>
       @for (angestellter of mitarbeiter(); track angestellter.mitarbeiterId) {
-        <td>&nbsp;</td>
+        <mat-option [value]="angestellter.mitarbeiterId">{{angestellter.name}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</form>
+
+<table class="w-full">
+  <thead class="bg-gray-50 border-b-2 border-gray-200">
+    <tr class="bg-gray-200">
+      <th class="p-3 text-sm tracking-wide text-left">Skill</th>
+      @for (angestellter of mitarbeiter(); track angestellter.mitarbeiterId) {
+        <th class="p-3 text-sm tracking-wide text-left">{{angestellter.name}}</th>
       }
     </tr>
-    @for (skill of skillGruppe.skills; track skill.skillId) {
-      <tr>
-        <td>{{skill.name}}</td>
+  </thead>
+  <tbody>
+    @for (skillGruppe of skillGruppen(); track skillGruppe.skillGruppeId) {
+      <tr class="bg-gray-50 border-b-2 border-gray-200">
+        <td class="p-3 text-sm text-gray-700"><h3>{{skillGruppe.name}}</h3></td>
         @for (angestellter of mitarbeiter(); track angestellter.mitarbeiterId) {
-          <td>
-            @for (mitarbeiterskillnm of skill.mitarbeiterskillnms; track mitarbeiterskillnm.mitarbetierSkillId) {
-              @if (mitarbeiterskillnm.mitarbeiterId == angestellter.mitarbeiterId) {
-                {{mitarbeiterskillnm.level}}
-              }
-            }
-          </td>
+          <td class="p-3 text-sm text-gray-700">&nbsp;</td>
         }
       </tr>
+      @for (skill of skillGruppe.skills; track skill.skillId) {
+        <tr class="border-b-2 border-gray-200">
+          <td class="p-3 text-sm text-gray-700">{{skill.name}}</td>
+          @for (angestellter of mitarbeiter(); track angestellter.mitarbeiterId) {
+            @for (mitarbeiterskillnm of skill.mitarbeiterskillnms; track mitarbeiterskillnm.mitarbetierSkillId) {
+              @if (mitarbeiterskillnm.mitarbeiterId == angestellter.mitarbeiterId) {
+                <td class="p-3 text-sm text-gray-700" [ngClass]="getSkillLevel(mitarbeiterskillnm.level)">
+                  {{mitarbeiterskillnm.level}}
+                </td>
+              }
+            }
+          }
+        </tr>
+      }
     }
-  }
+  </tbody>
 </table>

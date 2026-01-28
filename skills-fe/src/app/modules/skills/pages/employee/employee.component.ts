@@ -1,26 +1,43 @@
 import {Component, inject} from '@angular/core';
-import {ApiModule, MitarbeiterService, SkillgruppenService, SkillsService} from '../../../backend';
+import {ApiModule, MitarbeiterService, SkillgruppenService} from '../../../backend';
 import {toSignal} from '@angular/core/rxjs-interop';
+import {NgClass} from '@angular/common';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
   selector: 'app-employee',
   templateUrl: './employee.component.html',
   standalone: true,
   providers: [
-    SkillsService,
     SkillgruppenService,
     MitarbeiterService,
   ],
   imports: [
     ApiModule,
+    NgClass,
+    MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule
   ]
 })
 export class EmployeeComponent {
-  public skillsService = inject(SkillsService);
   public skillgruppenService = inject(SkillgruppenService);
   public mitarbeiterService = inject(MitarbeiterService);
 
-  public skills = toSignal(this.skillsService.apiSkillsGetSkillsGet());
   public skillGruppen = toSignal(this.skillgruppenService.apiSkillgruppenGetSkillgruppenWithUsersGet());
   public mitarbeiter = toSignal(this.mitarbeiterService.apiMitarbeiterGetAllMitarbeiterGet());
+
+  formMitarbeiter = new FormControl('');
+
+  public getSkillLevel(level: number | undefined): string {
+    if (level === undefined) {
+      return 'skill-level-undefined';
+    }
+
+    return 'skill-level-' + level;
+  }
+
+  public onSelectMitarbeiter(value: any): void {
+    console.log('mitarbeiter', value);
+  }
 }
