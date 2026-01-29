@@ -7,8 +7,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
-  selector: 'app-employee',
-  templateUrl: './employee.component.html',
+  selector: 'app-skills-employee',
+  templateUrl: './skills-employee.component.html',
   standalone: true,
   providers: [
     SkillgruppenService,
@@ -20,7 +20,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
     MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule
   ]
 })
-export class EmployeeComponent {
+export class SkillsEmployeeComponent {
   public displayedMitarbeiter = ['1'];
   public displayedSkills = [];
 
