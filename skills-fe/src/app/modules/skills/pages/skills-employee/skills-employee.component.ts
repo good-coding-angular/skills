@@ -17,7 +17,10 @@ import {MatFormFieldModule} from '@angular/material/form-field';
   imports: [
     ApiModule,
     NgClass,
-    MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule
+    MatFormFieldModule,
+    MatSelectModule,
+    FormsModule,
+    ReactiveFormsModule
   ]
 })
 export class SkillsEmployeeComponent {

@@ -6,7 +6,7 @@ namespace skills_be.Controllers;
 
 [ApiController]
 [Route(Endpoints.ApiPrefix + "[controller]")]
-public class MitarbeiterController
+public class MitarbeiterController : Controller
 {
     public IConfiguration Configuration { get; }
 
@@ -30,6 +30,65 @@ public class MitarbeiterController
                 .ToList();
 
             return mitarbeiter;
+        }
+    }
+
+    [HttpPost("createMitarbeiter")]
+    public MitarbeiterDto CreateMitarbeiter([FromBody] MitarbeiterDto dto)
+    {
+        using (var db = new SkillsContext(Configuration))
+        {
+            var entity = new Mitarbeiter
+            {
+                MitarbeiterId = Guid.NewGuid().ToString(),
+                Name = dto.Name,
+                Available = dto.Available
+            };
+
+            db.Mitarbeiters.Add(entity);
+            db.SaveChanges();
+
+            var result = new MitarbeiterDto
+            {
+                MitarbeiterId = entity.MitarbeiterId,
+                Name = entity.Name,
+                Available = entity.Available
+            };
+
+            return result;
+        }
+    }
+
+    [HttpPost("updateMitarbeiter")]
+    public ActionResult<MitarbeiterDto> UpdateMitarbeiter([FromBody] MitarbeiterDto dto)
+    {
+        if (string.IsNullOrWhiteSpace(dto.MitarbeiterId))
+        {
+            return BadRequest("MitarbeiterId is required for update.");
+        }
+
+        using (var db = new SkillsContext(Configuration))
+        {
+            var entity = db.Mitarbeiters.FirstOrDefault(m => m.MitarbeiterId == dto.MitarbeiterId);
+
+            if (entity == null)
+            {
+                return NotFound();
+            }
+
+            entity.Name = dto.Name;
+            entity.Available = dto.Available;
+
+            db.SaveChanges();
+
+            var result = new MitarbeiterDto
+            {
+                MitarbeiterId = entity.MitarbeiterId,
+                Name = entity.Name,
+                Available = entity.Available
+            };
+
+            return Ok(result);
         }
     }
 }

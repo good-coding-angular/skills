@@ -9,7 +9,7 @@ namespace skills_be.Controllers;
 
 [ApiController]
 [Route(Endpoints.ApiPrefix + "[controller]")]
-public class SkillsController
+public class SkillsController : Controller
 {
     public IConfiguration Configuration { get; }
 

@@ -8,7 +8,7 @@ namespace skills_be.Controllers;
 
 [ApiController]
 [Route(Endpoints.ApiPrefix + "[controller]")]
-public class SkillgruppenController
+public class SkillgruppenController : Controller
 {
     public IConfiguration Configuration { get; }
 
