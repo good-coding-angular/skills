@@ -1,3 +1,4 @@
+using System.DirectoryServices.AccountManagement;
 using Microsoft.AspNetCore.Mvc;
 using skills_be.Mapper;
 using skills_be.Models;
@@ -50,6 +51,41 @@ public class MitarbeiterController : Controller
             db.SaveChanges();
 
             return new MitarbeiterMapper().MapSingleMitarbeiterToMitarbeiterDto(entity);
+        }
+    }
+
+    [HttpGet("getEmployeesFromActiveDirectory")]
+    public ActionResult<IEnumerable<ActiveDirectoryUserDto>> GetEmployeesFromActiveDirectory()
+    {
+        var domain = Configuration["ActiveDirectory:Domain"];
+        var searchBase = Configuration["ActiveDirectory:SearchBase"];
+        var username = Configuration["ActiveDirectory:Username"];
+        var password = Configuration["ActiveDirectory:Password"];
+
+        try
+        {
+            using var context = string.IsNullOrWhiteSpace(username)
+                ? new PrincipalContext(ContextType.Domain, domain)
+                : new PrincipalContext(ContextType.Domain, domain, searchBase, username, password);
+
+            using var searcher = new PrincipalSearcher(new UserPrincipal(context) { Enabled = true });
+
+            var users = searcher.FindAll()
+                .Cast<UserPrincipal>()
+                .Select(u => new ActiveDirectoryUserDto
+                {
+                    SamAccountName = u.SamAccountName,
+                    DisplayName = u.DisplayName,
+                    Email = u.EmailAddress,
+                    UserPrincipalName = u.UserPrincipalName
+                })
+                .ToList();
+
+            return Ok(users);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Failed to connect to Active Directory: {ex.Message}");
         }
     }
 
