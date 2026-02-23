@@ -1,5 +1,11 @@
 import {Component, inject, signal} from '@angular/core';
-import {ApiModule, MitarbeiterDto, MitarbeiterService, SkillgruppeDto, SkillgruppenService} from '../../../backend';
+import {
+  ApiModule,
+  MitarbeiterDto,
+  MitarbeiterService,
+  SkillgruppeDto,
+  SkillgruppenService
+} from '../../../backend';
 import {toSignal} from '@angular/core/rxjs-interop';
 import {NgClass} from '@angular/common';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule} from '@angular/forms';

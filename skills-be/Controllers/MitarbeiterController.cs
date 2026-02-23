@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using skills_be.Mapper;
 using skills_be.Models;
 using skills_be.Models.Dto;
 
@@ -48,14 +49,7 @@ public class MitarbeiterController : Controller
             db.Mitarbeiters.Add(entity);
             db.SaveChanges();
 
-            var result = new MitarbeiterDto
-            {
-                MitarbeiterId = entity.MitarbeiterId,
-                Name = entity.Name,
-                Available = entity.Available
-            };
-
-            return result;
+            return new MitarbeiterMapper().MapSingleMitarbeiterToMitarbeiterDto(entity);
         }
     }
 

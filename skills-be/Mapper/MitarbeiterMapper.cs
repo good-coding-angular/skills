@@ -5,6 +5,17 @@ namespace skills_be.Mapper;
 
 public class MitarbeiterMapper
 {
+    public MitarbeiterDto MapSingleMitarbeiterToMitarbeiterDto(
+        Mitarbeiter mitarbeiter
+    ) {
+        return new MitarbeiterDto
+        {
+            MitarbeiterId = mitarbeiter.MitarbeiterId,
+            Name = mitarbeiter.Name,
+            Available = mitarbeiter.Available
+        };
+    }
+    
     public IList<MitarbeiterDto> MapMitarbeiterToMitarbeiterDto(
         IEnumerable<Mitarbeiter> mitarbeiter
     ) {
