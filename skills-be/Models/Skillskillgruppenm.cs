@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace skills_be.Models;
+﻿namespace skills_be.Models;
 
 public partial class Skillskillgruppenm
 {
-    public string SkillSkillgruppeId { get; set; } = null!;
+    public int SkillSkillgruppeId { get; set; }
 
-    public string SkillId { get; set; } = null!;
+    public int SkillId { get; set; }
 
-    public string SkillgruppeId { get; set; } = null!;
+    public int SkillgruppeId { get; set; }
 
     public virtual Skill Skill { get; set; } = null!;
 

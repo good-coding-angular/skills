@@ -30,7 +30,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
   ]
 })
 export class SkillsEmployeeComponent {
-  public displayedMitarbeiter = ['1'];
+  public displayedMitarbeiter: number[] = [1];
   public displayedSkills = [];
 
   public skillgruppenService = inject(SkillgruppenService);
@@ -41,7 +41,7 @@ export class SkillsEmployeeComponent {
   public mitarbeiter = toSignal(this.mitarbeiterService.apiMitarbeiterGetAllMitarbeiterGet());
 
   mitarbeiterForm = new FormGroup({
-    mitarbeiter: new FormControl(['1']),
+    mitarbeiter: new FormControl([1]),
     skillgruppen: new FormControl([])
   });
 

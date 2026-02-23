@@ -2,6 +2,6 @@
 
 public class GetFilteredSkillgruppenPostDto
 {
-    public string[] Users { get; set; }
-    public string[] Skills { get; set; }
+    public int[] Users { get; set; }
+    public int[] Skills { get; set; }
 }

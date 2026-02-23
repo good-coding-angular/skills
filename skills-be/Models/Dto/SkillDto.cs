@@ -5,7 +5,7 @@ namespace skills_be.Models.Dto;
 
 public partial class SkillDto
 {
-    public string SkillId { get; set; } = null!;
+    public int SkillId { get; set; }
 
     public string Name { get; set; } = null!;
 

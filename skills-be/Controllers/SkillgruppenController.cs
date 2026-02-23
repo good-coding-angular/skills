@@ -64,8 +64,8 @@ public class SkillgruppenController : Controller
                 .ThenInclude(ms => ms.Mitarbeiter)
                 .ToList();
 
-            var userIds = filter.Users?.ToHashSet() ?? new HashSet<string>();
-            var skillIds = filter.Skills?.ToHashSet() ?? new HashSet<string>();
+            var userIds = filter.Users?.ToHashSet() ?? new HashSet<int>();
+            var skillIds = filter.Skills?.ToHashSet() ?? new HashSet<int>();
 
             foreach (var sg in skillgruppen)
             {

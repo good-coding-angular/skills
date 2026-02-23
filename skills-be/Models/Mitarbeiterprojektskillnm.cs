@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace skills_be.Models;
+﻿namespace skills_be.Models;
 
 public partial class Mitarbeiterprojektskillnm
 {
-    public string MitarbeiterProjektSkillNmid { get; set; } = null!;
+    public int MitarbeiterProjektSkillNmid { get; set; }
 
-    public string MitarbeiterId { get; set; } = null!;
+    public int MitarbeiterId { get; set; }
 
-    public string ProjektId { get; set; } = null!;
+    public int ProjektId { get; set; }
 
-    public string? SkillId { get; set; }
+    public int? SkillId { get; set; }
 }

@@ -8,51 +8,53 @@ drop table if exists mitarbeiterProjektSkillNM;
 drop table if exists skillLearningSource;
 
 create table skillgruppe (
-  skillGruppeId varchar(36) primary key auto_increment,
+  skillGruppeId int primary key auto_increment,
   name varchar(200) not null
 );
 
 create table skill (
-  skillId varchar(36) primary key auto_increment,
+  skillId int primary key auto_increment,
   name varchar(200) not null,
   description varchar(5000)
 );
 
 create table skillSkillgruppeNM (
-  skillSkillgruppeId varchar(36) primary key auto_increment,
-  skillId varchar(36) not null,
-  skillgruppeId varchar(36) not null
+  skillSkillgruppeId int primary key auto_increment,
+  skillId int not null,
+  skillgruppeId int not null
 );
 
 create table mitarbeiter (
-  mitarbeiterId varchar(36) primary key auto_increment,
+  mitarbeiterId int primary key auto_increment,
+  employeeId varchar(36),
   name varchar(200) not null,
+  email varchar(200),
   available int not null
 );
 
 create table mitarbeiterSkillNM (
-  mitarbetierSkillId varchar(36) primary key auto_increment,
+  mitarbetierSkillId int primary key auto_increment,
   skillId varchar(36) not null,
-  mitarbeiterId varchar(36) not null,
+  mitarbeiterId int not null,
   level int not null
 );
 
 create table projekt (
-  projektId varchar(36) primary key auto_increment,
+  projektId int primary key auto_increment,
   projektname varchar(200) not null,
   projektende varchar(200)
 );
 
 create table mitarbeiterProjektSkillNM (
-  mitarbeiterProjektSkillNMId varchar(36) primary key auto_increment,
-  mitarbeiterId varchar(36) not null,
-  projektId varchar(36) not null,
-  skillId varchar(36)
+  mitarbeiterProjektSkillNMId int primary key auto_increment,
+  mitarbeiterId int not null,
+  projektId int not null,
+  skillId int
 );
 
 create table skillLearningSource (
-  skilllearningsourceId varchar(36) primary key auto_increment,
-  skillId varchar(36) not null,
+  skilllearningsourceId int primary key auto_increment,
+  skillId int not null,
   sourceName varchar(200),
   url LONGTEXT
 );
@@ -73,8 +75,8 @@ insert into skillSkillgruppeNM (skillSkillgruppeId, skillId, skillgruppeId) valu
 insert into skillSkillgruppeNM (skillSkillgruppeId, skillId, skillgruppeId) values (4, 4, 3);
 insert into skillSkillgruppeNM (skillSkillgruppeId, skillId, skillgruppeId) values (5, 5, 3);
 
-insert into mitarbeiter (mitarbeiterId, name, available) values (1, 'Simon Sharp', 1);
-insert into mitarbeiter (mitarbeiterId, name, available) values (2, 'Aram Yesildeniz', 1);
+insert into mitarbeiter (mitarbeiterId, employeeId, name, email, available) values (1, '', 'Simon Sharp', 'simon.sharp@elca.ch', 1);
+insert into mitarbeiter (mitarbeiterId, employeeId, name, email, available) values (2, '', 'Aram Yesildeniz', 'Aram.Yesildeniz@elca.ch', 1);
 
 insert into mitarbeiterSkillNM (mitarbetierSkillId, skillId, mitarbeiterId, level) values (1, 1, 1, 4);
 insert into mitarbeiterSkillNM (mitarbetierSkillId, skillId, mitarbeiterId, level) values (2, 2, 1, 1);

@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Pomelo.EntityFrameworkCore.MySql.Scaffolding.Internal;
 
 namespace skills_be.Models;
 
@@ -62,14 +59,21 @@ public partial class SkillsContext : DbContext
             entity.ToTable("mitarbeiter");
 
             entity.Property(e => e.MitarbeiterId)
-                .HasMaxLength(36)
+                .HasColumnType("int(11)")
                 .HasColumnName("mitarbeiterId");
+
+            entity.Property(e => e.EmployeeId)
+                .HasMaxLength(36)
+                .HasColumnName("employeeId");
             entity.Property(e => e.Available)
                 .HasColumnType("int(11)")
                 .HasColumnName("available");
             entity.Property(e => e.Name)
                 .HasMaxLength(200)
                 .HasColumnName("name");
+            entity.Property(e => e.Email)
+                .HasMaxLength(200)
+                .HasColumnName("email");
         });
 
         modelBuilder.Entity<Mitarbeiterprojektskillnm>(entity =>
@@ -79,16 +83,16 @@ public partial class SkillsContext : DbContext
             entity.ToTable("mitarbeiterprojektskillnm");
 
             entity.Property(e => e.MitarbeiterProjektSkillNmid)
-                .HasMaxLength(36)
+                .HasColumnType("int(11)")
                 .HasColumnName("mitarbeiterProjektSkillNMId");
             entity.Property(e => e.MitarbeiterId)
-                .HasMaxLength(36)
+                .HasColumnType("int(11)")
                 .HasColumnName("mitarbeiterId");
             entity.Property(e => e.ProjektId)
-                .HasMaxLength(36)
+                .HasColumnType("int(11)")
                 .HasColumnName("projektId");
             entity.Property(e => e.SkillId)
-                .HasMaxLength(36)
+                .HasColumnType("int(11)")
                 .HasColumnName("skillId");
         });
 
@@ -99,16 +103,16 @@ public partial class SkillsContext : DbContext
             entity.ToTable("mitarbeiterskillnm");
 
             entity.Property(e => e.MitarbetierSkillId)
-                .HasMaxLength(36)
+                .HasColumnType("int(11)")
                 .HasColumnName("mitarbetierSkillId");
             entity.Property(e => e.Level)
                 .HasColumnType("int(11)")
                 .HasColumnName("level");
             entity.Property(e => e.MitarbeiterId)
-                .HasMaxLength(36)
+                .HasColumnType("int(11)")
                 .HasColumnName("mitarbeiterId");
             entity.Property(e => e.SkillId)
-                .HasMaxLength(36)
+                .HasColumnType("int(11)")
                 .HasColumnName("skillId");
 
             entity.HasOne(d => d.Mitarbeiter)
@@ -129,7 +133,7 @@ public partial class SkillsContext : DbContext
             entity.ToTable("projekt");
 
             entity.Property(e => e.ProjektId)
-                .HasMaxLength(36)
+                .HasColumnType("int(11)")
                 .HasColumnName("projektId");
             entity.Property(e => e.Projektende)
                 .HasMaxLength(200)
@@ -146,7 +150,7 @@ public partial class SkillsContext : DbContext
             entity.ToTable("skill");
 
             entity.Property(e => e.SkillId)
-                .HasMaxLength(36)
+                .HasColumnType("int(11)")
                 .HasColumnName("skillId");
             entity.Property(e => e.Description)
                 .HasMaxLength(5000)
@@ -163,7 +167,7 @@ public partial class SkillsContext : DbContext
             entity.ToTable("skillgruppe");
 
             entity.Property(e => e.SkillGruppeId)
-                .HasMaxLength(36)
+                .HasColumnType("int(11)")
                 .HasColumnName("skillGruppeId");
             entity.Property(e => e.Name)
                 .HasMaxLength(200)
@@ -177,7 +181,7 @@ public partial class SkillsContext : DbContext
             entity.ToTable("skilllearningsource");
 
             entity.Property(e => e.SkilllearningsourceId)
-                .HasMaxLength(36)
+                .HasColumnType("int(11)")
                 .HasColumnName("skilllearningsourceId");
             entity.Property(e => e.SourceName)
                 .HasMaxLength(200)
@@ -204,13 +208,13 @@ public partial class SkillsContext : DbContext
                     j.ToTable("skillskillgruppenm");
 
                     j.Property(e => e.SkillSkillgruppeId)
-                        .HasMaxLength(36)
+                        .HasColumnType("int(11)")
                         .HasColumnName("skillSkillgruppeId");
                     j.Property(e => e.SkillId)
-                        .HasMaxLength(36)
+                        .HasColumnType("int(11)")
                         .HasColumnName("skillId");
                     j.Property(e => e.SkillgruppeId)
-                        .HasMaxLength(36)
+                        .HasColumnType("int(11)")
                         .HasColumnName("skillgruppeId");
                 });
 
@@ -232,16 +236,16 @@ public partial class SkillsContext : DbContext
                     j.ToTable("mitarbeiterskillnm");
 
                     j.Property(e => e.MitarbetierSkillId)
-                        .HasMaxLength(36)
+                        .HasColumnType("int(11)")
                         .HasColumnName("mitarbetierSkillId");
                     j.Property(e => e.Level)
                         .HasColumnType("int(11)")
                         .HasColumnName("level");
                     j.Property(e => e.MitarbeiterId)
-                        .HasMaxLength(36)
+                        .HasColumnType("int(11)")
                         .HasColumnName("mitarbeiterId");
                     j.Property(e => e.SkillId)
-                        .HasMaxLength(36)
+                        .HasColumnType("int(11)")
                         .HasColumnName("skillId");
                 });
 

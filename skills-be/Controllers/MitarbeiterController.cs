@@ -42,7 +42,6 @@ public class MitarbeiterController : Controller
         {
             var entity = new Mitarbeiter
             {
-                MitarbeiterId = Guid.NewGuid().ToString(),
                 Name = dto.Name,
                 Available = dto.Available
             };
@@ -72,19 +71,64 @@ public class MitarbeiterController : Controller
 
             var users = searcher.FindAll()
                 .Cast<UserPrincipal>()
-                .Select(u => new ActiveDirectoryUserDto
+                .Select(u =>
                 {
-                    SamAccountName = u.SamAccountName,
-                    DisplayName = u.DisplayName,
-                    Email = u.EmailAddress,
-                    UserPrincipalName = u.UserPrincipalName
+                    if (u.EmployeeId == null)
+                    {
+                        return null;
+                    }
+
+                    Console.WriteLine("u.EmployeeId: " + u.EmployeeId);
+                    Console.WriteLine("u.Guid: " + u.Guid);
+                    return new ActiveDirectoryUserDto
+                    {
+                        SamAccountName = u.EmployeeId,
+                        DisplayName = u.DisplayName,
+                        Email = u.EmailAddress,
+                        UserPrincipalName = u.UserPrincipalName
+                    };
                 })
                 .ToList();
 
-            return Ok(users);
+            using (var db = new SkillsContext(Configuration))
+            {
+                foreach (var user in users)
+                {
+                    if (user != null)
+                    {
+                        var existing = db.Mitarbeiters
+                            .FirstOrDefault(m => m.EmployeeId == user.SamAccountName);
+
+                        if (existing == null)
+                        {
+                            if (user.DisplayName != null)
+                            {
+                                db.Mitarbeiters.Add(new Mitarbeiter
+                                {
+                                    EmployeeId = user.SamAccountName,
+                                    Name = user.DisplayName,
+                                    Available = 0
+                                });
+                            }
+                        }
+                        else
+                        {
+                            existing.Name = user.DisplayName;
+                        }
+                    }
+                }
+
+                db.SaveChanges();
+            }
+
+            return Ok();
         }
         catch (Exception ex)
         {
+            if (ex.InnerException != null)
+            {
+                return StatusCode(500, $"Failed to connect to Active Directory: {ex.Message}, {ex.InnerException.Message}");
+            }
             return StatusCode(500, $"Failed to connect to Active Directory: {ex.Message}");
         }
     }
@@ -92,7 +136,7 @@ public class MitarbeiterController : Controller
     [HttpPost("updateMitarbeiter")]
     public ActionResult<MitarbeiterDto> UpdateMitarbeiter([FromBody] MitarbeiterDto dto)
     {
-        if (string.IsNullOrWhiteSpace(dto.MitarbeiterId))
+        if (dto.MitarbeiterId == null)
         {
             return BadRequest("MitarbeiterId is required for update.");
         }

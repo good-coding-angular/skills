@@ -1,11 +1,8 @@
-using System;
-using System.Collections.Generic;
-
 namespace skills_be.Models;
 
 public partial class Skillgruppe
 {
-    public string SkillGruppeId { get; set; } = null!;
+    public int SkillGruppeId { get; set; }
 
     public string Name { get; set; } = null!;
 

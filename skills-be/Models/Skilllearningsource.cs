@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace skills_be.Models;
+﻿namespace skills_be.Models;
 
 public partial class Skilllearningsource
 {
-    public string SkilllearningsourceId { get; set; } = null!;
+    public int SkilllearningsourceId { get; set; }
 
     public string? SourceName { get; set; }
 

@@ -5,7 +5,7 @@ namespace skills_be.Models.Dto;
 
 public partial class MitarbeiterDto
 {
-    public string MitarbeiterId { get; set; } = null!;
+    public int MitarbeiterId { get; set; }
 
     public string Name { get; set; } = null!;
 

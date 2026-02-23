@@ -5,11 +5,11 @@ namespace skills_be.Models.Dto;
 
 public partial class MitarbeiterskillnmDto
 {
-    public string MitarbetierSkillId { get; set; } = null!;
+    public int MitarbetierSkillId { get; set; }
 
-    public string SkillId { get; set; } = null!;
+    public int SkillId { get; set; }
 
-    public string MitarbeiterId { get; set; } = null!;
+    public int MitarbeiterId { get; set; }
 
     public int Level { get; set; }
     

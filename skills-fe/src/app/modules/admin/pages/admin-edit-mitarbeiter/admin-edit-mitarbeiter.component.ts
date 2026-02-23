@@ -19,7 +19,6 @@ import {MatButtonModule} from '@angular/material/button';
     ApiModule,
     FormsModule,
     ReactiveFormsModule,
-    NgIf,
     MatInputModule,
     MatSelectModule,
     MatFormFieldModule,
@@ -30,14 +29,14 @@ import {MatButtonModule} from '@angular/material/button';
 export class AdminEditMitarbeiterComponent implements OnInit {
   public mitarbeiterService = inject(MitarbeiterService);
   public allMitarbeiterList = signal<MitarbeiterDto[]>([]);
-  public editingMitarbeiterId: string | null = null;
+  public editingMitarbeiterId: number | null = null;
 
   public formChosenMitarbeiter = new FormGroup({
     mitarbeiter: new FormControl(['1'])
   });
 
   public formCurrentlyEditedMitarbeiter = new FormGroup({
-    mitarbeiterId: new FormControl<string>('', { nonNullable: true }),
+    mitarbeiterId: new FormControl<number>(0, { nonNullable: true }),
     name: new FormControl<string>('', { nonNullable: true }),
     available: new FormControl<number>(0, { nonNullable: true }),
   });
@@ -50,7 +49,7 @@ export class AdminEditMitarbeiterComponent implements OnInit {
       );
   }
 
-  public onChangeExistingMitarbeiter(id: string): void {
+  public onChangeExistingMitarbeiter(id: number): void {
     if (!id) {
       this.editingMitarbeiterId = null;
       this.formCurrentlyEditedMitarbeiter.reset({
